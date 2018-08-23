@@ -1,18 +1,22 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
+import People from "@material-ui/icons/People";
+import DesktopWindows from "@material-ui/icons/DesktopWindows";
 // import ContentPaste from "@material-ui/icons/ContentPaste";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
+// import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import Applications from "views/Applications/Applications.jsx";
+import Users from "views/Users/Users.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
-import Icons from "views/Icons/Icons.jsx";
+// import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
@@ -26,7 +30,21 @@ const dashboardRoutes = [
     component: DashboardPage
   },
   {
-    path: "/user",
+    path: "/applications",
+    sidebarName: "Applications",
+    navbarName: "Service Provider Application",
+    icon: DesktopWindows,
+    component: Applications
+  },
+  {
+    path: "/users",
+    sidebarName: "Users",
+    navbarName: "Users",
+    icon: People,
+    component: Users
+  },
+  {
+    path: "/profile",
     sidebarName: "User Profile",
     navbarName: "Profile",
     icon: Person,
@@ -45,13 +63,6 @@ const dashboardRoutes = [
     navbarName: "Typography",
     icon: LibraryBooks,
     component: Typography
-  },
-  {
-    path: "/icons",
-    sidebarName: "Icons",
-    navbarName: "Icons",
-    icon: BubbleChart,
-    component: Icons
   },
   {
     path: "/maps",

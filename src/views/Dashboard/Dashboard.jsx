@@ -42,10 +42,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class Dashboard extends Component {
   state = {
-    value: 0,
-    asu: {
-      kontol: "asu"
-    }
+    value: 0
   };
   handleChange = (event, value) => {
     this.setState({ value });
