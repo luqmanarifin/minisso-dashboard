@@ -109,6 +109,7 @@ class Applications extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer>
+        /* Delete dialog */
         <Dialog
           TransitionComponent={Transition}
           open={this.state.openDelete}
@@ -130,6 +131,7 @@ class Applications extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        /* Edit dialog */
         <Dialog
           fullWidth
           fullScreen
@@ -258,6 +260,7 @@ class Applications extends React.Component {
             <GridItem xs={12} sm={12} md={3} />
           </GridContainer>
         </Dialog>
+        /* Real page */
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader className={classes.cardHeader} color="primary">
