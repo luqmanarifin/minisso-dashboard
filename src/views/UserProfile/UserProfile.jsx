@@ -62,6 +62,136 @@ class UserProfile extends React.Component {
     const { classes } = this.props;
     return (
       <div>
+        {/* Create dialog */}
+        <Dialog
+          fullWidth
+          fullScreen
+          className={classes.modalDashboard}
+          TransitionComponent={Transition}
+          open={this.state.openCreate}
+          onClose={this.handleCreateClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={3} />
+            <GridItem xs={12} sm={12} md={6}>
+              <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+              <Card>
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <CustomInput
+                        labelText="Company (disabled)"
+                        id="company-disabled"
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ disabled: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={3}>
+                      <CustomInput
+                        labelText="Username"
+                        id="username"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Email address"
+                        id="email-address"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="First Name"
+                        id="first-name"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="Last Name"
+                        id="last-name"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="City"
+                        id="city"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Country"
+                        id="country"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Postal Code"
+                        id="postal-code"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <InputLabel style={{ color: "#AAAAAA" }}>
+                        About me
+                      </InputLabel>
+                      <CustomInput
+                        labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                        id="about-me"
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ multiline: true, rows: 5 }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
+              </Card>
+              <DialogActions>
+                <Button onClick={this.handleCreateClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={this.handleCreateClose} color="primary">
+                  Update
+                </Button>
+              </DialogActions>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={3} />
+          </GridContainer>
+        </Dialog>
+        {/* Delete dialog */}
+        <Dialog
+          TransitionComponent={Transition}
+          open={this.state.openDelete}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDeleteClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleDeleteClose} color="primary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Edit dialog */}
         <Dialog
           TransitionComponent={Transition}
           open={this.state.open}
@@ -92,6 +222,7 @@ class UserProfile extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        {/* real page*/}
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
