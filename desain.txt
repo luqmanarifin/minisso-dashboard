@@ -1,0 +1,33 @@
+create:
+name
+description
+
+table:
+no
+name
+client id
+created at
+
+edit:
+name
+client_id client_secret
+description
+
+
+
+create:
+firstname lastname
+gender role
+email pass
+
+table:
+no
+name
+email
+role
+last login
+
+edit:
+firstname lastname
+gender role
+email pass
