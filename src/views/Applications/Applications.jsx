@@ -86,7 +86,8 @@ class Applications extends React.Component {
   state = {
     value: 0,
     open: false,
-    openDelete: false
+    openDelete: false,
+    openCreate: false
   };
 
   handleClickOpen = () => {
@@ -105,11 +106,125 @@ class Applications extends React.Component {
     this.setState({ openDelete: false });
   };
 
+  handleCreateOpen = () => {
+    this.setState({ openCreate: true });
+  };
+
+  handleCreateClose = () => {
+    this.setState({ openCreate: false });
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <GridContainer>
-        /* Delete dialog */
+        {/* Create dialog */}
+        <Dialog
+          fullWidth
+          fullScreen
+          className={classes.modalDashboard}
+          TransitionComponent={Transition}
+          open={this.state.openCreate}
+          onClose={this.handleCreateClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={3} />
+            <GridItem xs={12} sm={12} md={6}>
+              <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+              <Card>
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <CustomInput
+                        labelText="Company (disabled)"
+                        id="company-disabled"
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ disabled: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={3}>
+                      <CustomInput
+                        labelText="Username"
+                        id="username"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Email address"
+                        id="email-address"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="First Name"
+                        id="first-name"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="Last Name"
+                        id="last-name"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="City"
+                        id="city"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Country"
+                        id="country"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <CustomInput
+                        labelText="Postal Code"
+                        id="postal-code"
+                        formControlProps={{ fullWidth: true }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <InputLabel style={{ color: "#AAAAAA" }}>
+                        About me
+                      </InputLabel>
+                      <CustomInput
+                        labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                        id="about-me"
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ multiline: true, rows: 5 }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
+              </Card>
+              <DialogActions>
+                <Button onClick={this.handleCreateClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={this.handleCreateClose} color="primary">
+                  Update
+                </Button>
+              </DialogActions>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={3} />
+          </GridContainer>
+        </Dialog>
+        {/* Delete dialog */}
         <Dialog
           TransitionComponent={Transition}
           open={this.state.openDelete}
@@ -131,7 +246,7 @@ class Applications extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        /* Edit dialog */
+        {/* Edit dialog */}
         <Dialog
           fullWidth
           fullScreen
@@ -152,30 +267,22 @@ class Applications extends React.Component {
                       <CustomInput
                         labelText="Company (disabled)"
                         id="company-disabled"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          disabled: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ disabled: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={3}>
                       <CustomInput
                         labelText="Username"
                         id="username"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="Email address"
                         id="email-address"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                   </GridContainer>
@@ -184,18 +291,14 @@ class Applications extends React.Component {
                       <CustomInput
                         labelText="First Name"
                         id="first-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
                         labelText="Last Name"
                         id="last-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                   </GridContainer>
@@ -204,27 +307,21 @@ class Applications extends React.Component {
                       <CustomInput
                         labelText="City"
                         id="city"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="Country"
                         id="country"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="Postal Code"
                         id="postal-code"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
+                        formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                   </GridContainer>
@@ -236,13 +333,8 @@ class Applications extends React.Component {
                       <CustomInput
                         labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
                         id="about-me"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          multiline: true,
-                          rows: 5
-                        }}
+                        formControlProps={{ fullWidth: true }}
+                        inputProps={{ multiline: true, rows: 5 }}
                       />
                     </GridItem>
                   </GridContainer>
@@ -260,7 +352,7 @@ class Applications extends React.Component {
             <GridItem xs={12} sm={12} md={3} />
           </GridContainer>
         </Dialog>
-        /* Real page */
+        { /* Real page */ }
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader className={classes.cardHeader} color="primary">
@@ -271,7 +363,10 @@ class Applications extends React.Component {
                 </p>
               </div>
               <div style={{ position: "relative" }}>
-                <Button className={`${classes.info} ${classes.createButton}`}>
+                <Button
+                  className={`${classes.info} ${classes.createButton}`}
+                  onClick={this.handleCreateOpen}
+                >
                   Create
                 </Button>
               </div>
