@@ -5,7 +5,9 @@ description
 table:
 no
 name
+desc
 client id
+client secret
 created at
 
 edit:
@@ -23,6 +25,7 @@ email pass
 table:
 no
 name
+gender
 email
 role
 last login

@@ -85,9 +85,22 @@ function Transition(props) {
 class Applications extends React.Component {
   state = {
     value: 0,
-    open: false,
-    openDelete: false,
-    openCreate: false
+    delete: {
+      open: false
+    },
+    create: {
+      open: false,
+      name: "",
+      description: ""
+    },
+    edit: {
+      open: false,
+      name: "",
+      clientId: "",
+      clientSecret: "",
+      description: ""
+    },
+    applications: []
   };
 
   handleClickOpen = () => {
@@ -114,6 +127,14 @@ class Applications extends React.Component {
     this.setState({ openCreate: false });
   };
 
+  onChangeName = (event) => {
+    this.setState({ valueSecret: event.target.value });
+  };
+
+  onChangeClientId = (event) => {
+    this.setS
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -131,68 +152,16 @@ class Applications extends React.Component {
           <GridContainer>
             <GridItem xs={12} sm={12} md={3} />
             <GridItem xs={12} sm={12} md={6}>
-              <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+              <DialogTitle id="form-dialog-title">
+                Create New Application
+              </DialogTitle>
               <Card>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={5}>
+                    <GridItem xs={12} sm={12} md={12}>
                       <CustomInput
-                        labelText="Company (disabled)"
-                        id="company-disabled"
-                        formControlProps={{ fullWidth: true }}
-                        inputProps={{ disabled: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <CustomInput
-                        labelText="Username"
-                        id="username"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Email address"
-                        id="email-address"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="First Name"
-                        id="first-name"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="Last Name"
-                        id="last-name"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="City"
-                        id="city"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Country"
-                        id="country"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Postal Code"
-                        id="postal-code"
+                        labelText="Name"
+                        id="name"
                         formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
@@ -200,11 +169,11 @@ class Applications extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
                       <InputLabel style={{ color: "#AAAAAA" }}>
-                        About me
+                        Description
                       </InputLabel>
                       <CustomInput
-                        labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                        id="about-me"
+                        labelText="Put the description of the application."
+                        id="description"
                         formControlProps={{ fullWidth: true }}
                         inputProps={{ multiline: true, rows: 5 }}
                       />
@@ -217,7 +186,7 @@ class Applications extends React.Component {
                   Cancel
                 </Button>
                 <Button onClick={this.handleCreateClose} color="primary">
-                  Update
+                  Create
                 </Button>
               </DialogActions>
             </GridItem>
@@ -259,29 +228,14 @@ class Applications extends React.Component {
           <GridContainer>
             <GridItem xs={12} sm={12} md={3} />
             <GridItem xs={12} sm={12} md={6}>
-              <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+              <DialogTitle id="form-dialog-title">Edit application</DialogTitle>
               <Card>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={5}>
+                    <GridItem xs={12} sm={12} md={12}>
                       <CustomInput
-                        labelText="Company (disabled)"
-                        id="company-disabled"
-                        formControlProps={{ fullWidth: true }}
-                        inputProps={{ disabled: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <CustomInput
-                        labelText="Username"
-                        id="username"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Email address"
-                        id="email-address"
+                        labelText="Name"
+                        id="name"
                         formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
@@ -289,50 +243,29 @@ class Applications extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="First Name"
-                        id="first-name"
+                        labelText="Client ID"
+                        id="client-id"
                         formControlProps={{ fullWidth: true }}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Last Name"
-                        id="last-name"
+                        labelText="Client Secret"
+                        id="client-secret"
                         formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="City"
-                        id="city"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Country"
-                        id="country"
-                        formControlProps={{ fullWidth: true }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Postal Code"
-                        id="postal-code"
-                        formControlProps={{ fullWidth: true }}
+                        value={this.state.valueSecret}
+                        onChange={this.onChangeSecret}
                       />
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
                       <InputLabel style={{ color: "#AAAAAA" }}>
-                        About me
+                        Description
                       </InputLabel>
                       <CustomInput
-                        labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                        id="about-me"
+                        labelText="Put the description of the application."
+                        id="description"
                         formControlProps={{ fullWidth: true }}
                         inputProps={{ multiline: true, rows: 5 }}
                       />
@@ -380,7 +313,7 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba"}
+                        key={"coba1"}
                       >
                         {"Coba"}
                       </TableCell>
@@ -388,7 +321,7 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba"}
+                        key={"coba2"}
                       >
                         {"Hehe"}
                       </TableCell>
@@ -396,7 +329,7 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba"}
+                        key={"coba3"}
                       >
                         {"Lala"}
                       </TableCell>
@@ -404,7 +337,7 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba"}
+                        key={"coba4"}
                       >
                         {"Kentang"}
                       </TableCell>
@@ -413,16 +346,16 @@ class Applications extends React.Component {
                   </TableHead>
                   <TableBody>
                     <TableRow key={"1"}>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key1"}>
                         {"1"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key2"}>
                         {"lalalal"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key3"}>
                         {"b"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key4"}>
                         {"lalalal"}
                       </TableCell>
                       <TableCell className={classes.tableActions}>
@@ -468,17 +401,17 @@ class Applications extends React.Component {
                         </Tooltip>
                       </TableCell>
                     </TableRow>
-                    <TableRow key={"1"}>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                    <TableRow key={"2"}>
+                      <TableCell className={classes.tableCell} key={"key1"}>
                         {"2"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key2"}>
                         {"lalalal"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key3"}>
                         {"b"}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={"key"}>
+                      <TableCell className={classes.tableCell} key={"key4"}>
                         {"lalalal"}
                       </TableCell>
                       <TableCell className={classes.tableActions}>
