@@ -107,7 +107,7 @@ class Applications extends React.Component {
     this.setState({ edit: { open: true } });
   };
 
-  handleClose = () => {
+  handleEditClose = () => {
     this.setState({ edit: { open: false } });
   };
 
@@ -197,7 +197,7 @@ class Applications extends React.Component {
         <Dialog
           TransitionComponent={Transition}
           open={this.state.delete.open}
-          onClose={this.handleClose}
+          onClose={this.handleEditClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Delete</DialogTitle>
@@ -222,7 +222,7 @@ class Applications extends React.Component {
           className={classes.modalDashboard}
           TransitionComponent={Transition}
           open={this.state.edit.open}
-          onClose={this.handleClose}
+          onClose={this.handleEditClose}
           aria-labelledby="form-dialog-title"
         >
           <GridContainer>
@@ -274,10 +274,10 @@ class Applications extends React.Component {
                 </CardBody>
               </Card>
               <DialogActions>
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={this.handleEditClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={this.handleEditClose} color="primary">
                   Update
                 </Button>
               </DialogActions>
@@ -368,7 +368,7 @@ class Applications extends React.Component {
                           <IconButton
                             aria-label="Edit"
                             className={classes.tableActionButton}
-                            onClick={this.handleClickOpen}
+                            onClick={this.handleEditOpen}
                           >
                             <Edit
                               className={
