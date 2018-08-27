@@ -103,6 +103,25 @@ class Applications extends React.Component {
     applications: []
   };
 
+  fetchApplication() {
+    fetch("http://localhost:1234/services", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      }
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        // this.setState({ isLoaded: true, items: result.items });
+      });
+  }
+
   handleClickOpen = () => {
     this.setState({ edit: { open: true } });
   };
@@ -120,6 +139,7 @@ class Applications extends React.Component {
   };
 
   handleCreateOpen = () => {
+    this.fetchApplication();
     this.setState({ create: { open: true } });
   };
 
