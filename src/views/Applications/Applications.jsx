@@ -118,7 +118,9 @@ class Applications extends React.Component {
       .then(res => res.json())
       .then(result => {
         console.log(result);
-        // this.setState({ isLoaded: true, items: result.items });
+        this.setState({
+          applications: result.data
+        });
       });
   }
 
