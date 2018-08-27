@@ -104,27 +104,27 @@ class Applications extends React.Component {
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({ edit.open: true });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ edit.open: false });
   };
 
   handleDeleteOpen = () => {
-    this.setState({ openDelete: true });
+    this.setState({ delete.open: true });
   };
 
   handleDeleteClose = () => {
-    this.setState({ openDelete: false });
+    this.setState({ delete.open: false });
   };
 
   handleCreateOpen = () => {
-    this.setState({ openCreate: true });
+    this.setState({ create.open: true });
   };
 
   handleCreateClose = () => {
-    this.setState({ openCreate: false });
+    this.setState({ create.open: false });
   };
 
   onChangeName = (event) => {
