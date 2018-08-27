@@ -104,36 +104,36 @@ class Applications extends React.Component {
   };
 
   handleClickOpen = () => {
-    this.setState({ edit.open: true });
+    this.setState({ edit: { open: true } });
   };
 
   handleClose = () => {
-    this.setState({ edit.open: false });
+    this.setState({ edit: { open: false } });
   };
 
   handleDeleteOpen = () => {
-    this.setState({ delete.open: true });
+    this.setState({ delete: { open: true } });
   };
 
   handleDeleteClose = () => {
-    this.setState({ delete.open: false });
+    this.setState({ delete: { open: false } });
   };
 
   handleCreateOpen = () => {
-    this.setState({ create.open: true });
+    this.setState({ create: { open: true } });
   };
 
   handleCreateClose = () => {
-    this.setState({ create.open: false });
+    this.setState({ create: { open: false } });
   };
 
-  onChangeName = (event) => {
+  onChangeName = event => {
     this.setState({ valueSecret: event.target.value });
   };
 
-  onChangeClientId = (event) => {
-    this.setS
-  }
+  onChangeClientId = event => {
+    this.setS;
+  };
 
   render() {
     const { classes } = this.props;
@@ -145,7 +145,7 @@ class Applications extends React.Component {
           fullScreen
           className={classes.modalDashboard}
           TransitionComponent={Transition}
-          open={this.state.openCreate}
+          open={this.state.create.open}
           onClose={this.handleCreateClose}
           aria-labelledby="form-dialog-title"
         >
@@ -196,7 +196,7 @@ class Applications extends React.Component {
         {/* Delete dialog */}
         <Dialog
           TransitionComponent={Transition}
-          open={this.state.openDelete}
+          open={this.state.delete.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
@@ -221,7 +221,7 @@ class Applications extends React.Component {
           fullScreen
           className={classes.modalDashboard}
           TransitionComponent={Transition}
-          open={this.state.open}
+          open={this.state.edit.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
