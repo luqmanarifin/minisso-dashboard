@@ -117,15 +117,28 @@ class Applications extends React.Component {
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result);
         this.setState({
           applications: result.data
         });
       });
   }
 
-  handleClickOpen = () => {
-    this.setState({ edit: { open: true } });
+  componentDidMount() {
+    this.fetchApplication();
+  }
+
+  handleEditOpen = event => {
+    var id = event.target.value;
+    console.log(id);
+    this.setState({
+      edit: {
+        open: true,
+        name: this.state.applications[id].name,
+        clientId: this.state.applications[id].client_id,
+        clientSecret: this.state.applications[id].client_secret,
+        description: this.state.applications[id].description
+      }
+    });
   };
 
   handleEditClose = () => {
@@ -149,12 +162,54 @@ class Applications extends React.Component {
     this.setState({ create: { open: false } });
   };
 
+  handleEditSubmit = () => {};
+
   onChangeName = event => {
-    this.setState({ valueSecret: event.target.value });
+    this.setState({
+      edit: {
+        open: true,
+        name: event.target.value,
+        clientId: this.state.edit.clientId,
+        clientSecret: this.state.edit.clientSecret,
+        description: this.state.edit.description
+      }
+    });
   };
 
   onChangeClientId = event => {
-    this.setS;
+    this.setState({
+      edit: {
+        open: true,
+        name: this.state.edit.name,
+        clientId: event.target.value,
+        clientSecret: this.state.edit.clientSecret,
+        description: this.state.edit.description
+      }
+    });
+  };
+
+  onChangeClientSecret = event => {
+    this.setState({
+      edit: {
+        open: true,
+        name: this.state.edit.name,
+        clientId: this.state.edit.clientId,
+        clientSecret: event.target.value,
+        description: this.state.edit.description
+      }
+    });
+  };
+
+  onChangeDescription = event => {
+    this.setState({
+      edit: {
+        open: true,
+        name: this.state.edit.name,
+        clientId: this.state.edit.clientId,
+        clientSecret: this.state.edit.clientSecret,
+        description: event.target.value
+      }
+    });
   };
 
   render() {
@@ -259,6 +314,8 @@ class Applications extends React.Component {
                         labelText="Name"
                         id="name"
                         formControlProps={{ fullWidth: true }}
+                        onChange={this.onChangeName}
+                        value={this.state.edit.name}
                       />
                     </GridItem>
                   </GridContainer>
@@ -268,6 +325,8 @@ class Applications extends React.Component {
                         labelText="Client ID"
                         id="client-id"
                         formControlProps={{ fullWidth: true }}
+                        onChange={this.onChangeClientId}
+                        value={this.state.edit.clientId}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
@@ -276,7 +335,8 @@ class Applications extends React.Component {
                         id="client-secret"
                         formControlProps={{ fullWidth: true }}
                         value={this.state.valueSecret}
-                        onChange={this.onChangeSecret}
+                        onChange={this.onChangeClientSecret}
+                        value={this.state.edit.clientSecret}
                       />
                     </GridItem>
                   </GridContainer>
@@ -290,6 +350,8 @@ class Applications extends React.Component {
                         id="description"
                         formControlProps={{ fullWidth: true }}
                         inputProps={{ multiline: true, rows: 5 }}
+                        onChange={this.onChangeDescription}
+                        value={this.state.edit.description}
                       />
                     </GridItem>
                   </GridContainer>
@@ -335,150 +397,126 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba1"}
+                        key={"no"}
                       >
-                        {"Coba"}
+                        {"No."}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba2"}
+                        key={"name"}
                       >
-                        {"Hehe"}
+                        {"Application Name"}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba3"}
+                        key={"desc"}
                       >
-                        {"Lala"}
+                        {"Description"}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"coba4"}
+                        key={"client-id"}
                       >
-                        {"Kentang"}
+                        {"Client ID"}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          classes.tableCell + " " + classes.tableHeadCell
+                        }
+                        key={"client-secret"}
+                      >
+                        {"Client Secret"}
                       </TableCell>
                       <TableCell />
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow key={"1"}>
-                      <TableCell className={classes.tableCell} key={"key1"}>
-                        {"1"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key2"}>
-                        {"lalalal"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key3"}>
-                        {"b"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key4"}>
-                        {"lalalal"}
-                      </TableCell>
-                      <TableCell className={classes.tableActions}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Application"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                            onClick={this.handleEditOpen}
+                    {this.state.applications.map(function(app, i) {
+                      return (
+                        <TableRow key={i}>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"no" + i}
                           >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                            onClick={this.handleDeleteOpen}
+                            {i + 1}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"name" + i}
                           >
-                            <Close
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key={"2"}>
-                      <TableCell className={classes.tableCell} key={"key1"}>
-                        {"2"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key2"}>
-                        {"lalalal"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key3"}>
-                        {"b"}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} key={"key4"}>
-                        {"lalalal"}
-                      </TableCell>
-                      <TableCell className={classes.tableActions}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Edit Application"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Edit"
-                            className={classes.tableActionButton}
-                            onClick={this.handleClickOpen}
+                            {app.name}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"desc" + i}
                           >
-                            <Edit
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.edit
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top-start"
-                          title="Remove"
-                          placement="top"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <IconButton
-                            aria-label="Close"
-                            className={classes.tableActionButton}
-                            onClick={this.handleDeleteOpen}
+                            {app.description}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"client-id" + i}
                           >
-                            <Close
-                              className={
-                                classes.tableActionButtonIcon +
-                                " " +
-                                classes.close
-                              }
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
+                            {app.client_id}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"client-secret" + i}
+                          >
+                            {app.client_secret}
+                          </TableCell>
+                          <TableCell className={classes.tableActions}>
+                            <Tooltip
+                              id="tooltip-top"
+                              title="Edit Application"
+                              placement="top"
+                              classes={{ tooltip: classes.tooltip }}
+                            >
+                              <IconButton
+                                aria-label="Edit"
+                                className={classes.tableActionButton}
+                                onClick={this.handleEditOpen}
+                                value={i}
+                              >
+                                <Edit
+                                  className={
+                                    classes.tableActionButtonIcon +
+                                    " " +
+                                    classes.edit
+                                  }
+                                />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip
+                              id="tooltip-top-start"
+                              title="Remove"
+                              placement="top"
+                              classes={{ tooltip: classes.tooltip }}
+                            >
+                              <IconButton
+                                aria-label="Close"
+                                className={classes.tableActionButton}
+                                onClick={this.handleDeleteOpen}
+                                value={i}
+                              >
+                                <Close
+                                  className={
+                                    classes.tableActionButtonIcon +
+                                    " " +
+                                    classes.close
+                                  }
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }, this)}
                   </TableBody>
                 </Table>
               </div>
