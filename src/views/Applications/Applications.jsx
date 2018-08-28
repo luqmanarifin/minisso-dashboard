@@ -1,5 +1,7 @@
 import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 // material-ui components
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -103,6 +105,14 @@ class Applications extends React.Component {
     },
     applications: []
   };
+
+  timeAgo = 5;
+
+  constructor() {
+    super();
+    TimeAgo.locale(en);
+    this.timeAgo = new TimeAgo("en-US");
+  }
 
   fetchApplication() {
     fetch("http://localhost:1234/services", {
@@ -543,9 +553,9 @@ class Applications extends React.Component {
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"client-secret"}
+                        key={"created-at"}
                       >
-                        {"Client Secret"}
+                        {"Created"}
                       </TableCell>
                       <TableCell />
                     </TableRow>
@@ -580,9 +590,9 @@ class Applications extends React.Component {
                           </TableCell>
                           <TableCell
                             className={classes.tableCell}
-                            key={"client-secret" + i}
+                            key={"created-at" + i}
                           >
-                            {app.client_secret}
+                            {this.timeAgo.format(new Date(app.created_at))}
                           </TableCell>
                           <TableCell className={classes.tableActions}>
                             <Tooltip
