@@ -94,6 +94,7 @@ class Applications extends React.Component {
       description: ""
     },
     edit: {
+      id: 0,
       open: false,
       name: "",
       clientId: "",
@@ -133,6 +134,7 @@ class Applications extends React.Component {
     this.setState({
       edit: {
         open: true,
+        id: this.state.applications[id].id,
         name: this.state.applications[id].name,
         clientId: this.state.applications[id].client_id,
         clientSecret: this.state.applications[id].client_secret,
@@ -162,12 +164,43 @@ class Applications extends React.Component {
     this.setState({ create: { open: false } });
   };
 
-  handleEditSubmit = () => {};
+  handleEditSubmit = () => {
+    fetch("http://localhost:1234/services/" + this.state.edit.id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      },
+      body: JSON.stringify({
+        application: {
+          name: this.state.edit.name,
+          id: this.state.edit.id,
+          client_id: this.state.edit.clientId,
+          client_secret: this.state.edit.clientSecret,
+          description: this.state.edit.description
+        }
+      })
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchApplication();
+        this.setState({
+          edit: {
+            open: false
+          }
+        });
+      });
+  };
 
   onChangeName = event => {
     this.setState({
       edit: {
         open: true,
+        id: this.state.edit.id,
         name: event.target.value,
         clientId: this.state.edit.clientId,
         clientSecret: this.state.edit.clientSecret,
@@ -180,6 +213,7 @@ class Applications extends React.Component {
     this.setState({
       edit: {
         open: true,
+        id: this.state.edit.id,
         name: this.state.edit.name,
         clientId: event.target.value,
         clientSecret: this.state.edit.clientSecret,
@@ -192,6 +226,7 @@ class Applications extends React.Component {
     this.setState({
       edit: {
         open: true,
+        id: this.state.edit.id,
         name: this.state.edit.name,
         clientId: this.state.edit.clientId,
         clientSecret: event.target.value,
@@ -204,6 +239,7 @@ class Applications extends React.Component {
     this.setState({
       edit: {
         open: true,
+        id: this.state.edit.id,
         name: this.state.edit.name,
         clientId: this.state.edit.clientId,
         clientSecret: this.state.edit.clientSecret,
@@ -361,7 +397,7 @@ class Applications extends React.Component {
                 <Button onClick={this.handleEditClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleEditClose} color="primary">
+                <Button onClick={this.handleEditSubmit} color="primary">
                   Update
                 </Button>
               </DialogActions>
