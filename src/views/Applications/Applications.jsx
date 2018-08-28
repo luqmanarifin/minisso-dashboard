@@ -458,7 +458,6 @@ class Applications extends React.Component {
                         labelText="Client Secret"
                         id="client-secret"
                         formControlProps={{ fullWidth: true }}
-                        value={this.state.valueSecret}
                         onChange={this.onChangeClientSecret}
                         value={this.state.edit.clientSecret}
                       />

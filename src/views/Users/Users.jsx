@@ -16,7 +16,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import InputLabel from "@material-ui/core/InputLabel";
 // @material-ui/icons
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
@@ -253,6 +252,7 @@ class Users extends React.Component {
   };
 
   handleDeleteSubmit = event => {
+    console.log(this.state.delete.id);
     fetch("http://localhost:1234/users/" + this.state.delete.id, {
       method: "DELETE",
       headers: {
@@ -473,13 +473,13 @@ class Users extends React.Component {
                 </Button>
                 <Button
                   onClick={
-                    this.state.captionModal == this.CREATE_CAPTION
+                    this.state.captionModal === this.CREATE_CAPTION
                       ? this.handleCreateSubmit
                       : this.handleEditSubmit
                   }
                   color="primary"
                 >
-                  {this.state.captionModal == this.CREATE_CAPTION
+                  {this.state.captionModal === this.CREATE_CAPTION
                     ? "Create"
                     : "Update"}
                 </Button>
