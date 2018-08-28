@@ -198,11 +198,11 @@ class UserProfile extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Follow</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
+              To follow to this website, please enter your email address here.
+              We will send updates occasionally.
             </DialogContentText>
             <TextField
               autoFocus
