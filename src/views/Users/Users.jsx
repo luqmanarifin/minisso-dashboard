@@ -86,6 +86,7 @@ function Transition(props) {
 class Users extends React.Component {
   state = {
     value: 0,
+    captionModal: "",
     delete: {
       open: false,
       id: 0
@@ -104,6 +105,9 @@ class Users extends React.Component {
   };
 
   timeAgo = 5;
+
+  EDIT_CAPTION = "Edit User";
+  CREATE_CAPTION = "Create New User";
 
   constructor() {
     super();
@@ -137,6 +141,7 @@ class Users extends React.Component {
     var id = event.target.value;
     console.log(id);
     this.setState({
+      captionModal: this.EDIT_CAPTION,
       modal: {
         open: true,
         id: this.state.users[id].id,
@@ -154,10 +159,39 @@ class Users extends React.Component {
     this.setState({ modal: { open: false } });
   };
 
-  handleEditSubmit = event => {};
+  handleEditSubmit = event => {
+    fetch("http://localhost:1234/users/" + this.state.modal.id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      },
+      body: JSON.stringify({
+        user: {
+          id: this.state.modal.id,
+          first_name: this.state.modal.firstName,
+          last_name: this.state.modal.lastName,
+          gender: this.state.modal.gender,
+          role: this.state.modal.role,
+          email: this.state.modal.email,
+          password: this.state.modal.pass
+        }
+      })
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchUser();
+        this.setState({ modal: { open: false } });
+      });
+  };
 
   handleCreateOpen = event => {
     this.setState({
+      captionModal: this.CREATE_CAPTION,
       modal: {
         open: true,
         id: 0,
@@ -175,86 +209,162 @@ class Users extends React.Component {
     this.setState({ modal: { open: false } });
   };
 
-  handleCreateSubmit = event => {};
+  handleCreateSubmit = event => {
+    fetch("http://localhost:1234/users", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      },
+      body: JSON.stringify({
+        user: {
+          id: this.state.modal.id,
+          first_name: this.state.modal.firstName,
+          last_name: this.state.modal.lastName,
+          gender: this.state.modal.gender,
+          role: this.state.modal.role,
+          email: this.state.modal.email,
+          password: this.state.modal.pass
+        }
+      })
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchUser();
+        this.setState({ modal: { open: false } });
+      });
+  };
 
-  handleDeleteOpen = event => {};
+  handleDeleteOpen = event => {
+    this.setState({
+      delete: {
+        open: true,
+        id: event.target.value
+      }
+    });
+  };
 
-  handleDeleteClose = event => {};
+  handleDeleteClose = event => {
+    this.setState({ delete: { open: false } });
+  };
 
-  onChangeFirstName = event => {};
+  handleDeleteSubmit = event => {
+    fetch("http://localhost:1234/users/" + this.state.delete.id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      }
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchUser();
+        this.setState({ delete: { open: false } });
+      });
+  };
 
-  onChangeLastName = event => {};
+  onChangeFirstName = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: event.target.value,
+        lastName: this.state.modal.lastName,
+        gender: this.state.modal.gender,
+        role: this.state.modal.role,
+        email: this.state.modal.email,
+        pass: this.state.modal.pass
+      }
+    });
+  };
 
-  onChangeGender = event => {};
+  onChangeLastName = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: this.state.modal.firstName,
+        lastName: event.target.value,
+        gender: this.state.modal.gender,
+        role: this.state.modal.role,
+        email: this.state.modal.email,
+        pass: this.state.modal.pass
+      }
+    });
+  };
 
-  onChangeRole = event => {};
+  onChangeGender = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: this.state.modal.firstName,
+        lastName: this.state.modal.lastName,
+        gender: event.target.value,
+        role: this.state.modal.role,
+        email: this.state.modal.email,
+        pass: this.state.modal.pass
+      }
+    });
+  };
 
-  onChangeEmail = event => {};
+  onChangeRole = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: this.state.modal.firstName,
+        lastName: this.state.modal.lastName,
+        gender: this.state.modal.gender,
+        role: event.target.value,
+        email: this.state.modal.email,
+        pass: this.state.modal.pass
+      }
+    });
+  };
 
-  onChangePass = event => {};
+  onChangeEmail = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: this.state.modal.firstName,
+        lastName: this.state.modal.lastName,
+        gender: this.state.modal.gender,
+        role: this.state.modal.role,
+        email: event.target.value,
+        pass: this.state.modal.pass
+      }
+    });
+  };
+
+  onChangePass = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.modal.id,
+        firstName: this.state.modal.firstName,
+        lastName: this.state.modal.lastName,
+        gender: this.state.modal.gender,
+        role: this.state.modal.role,
+        email: this.state.modal.email,
+        pass: event.target.value
+      }
+    });
+  };
 
   render() {
     const { classes } = this.props;
     return (
       <GridContainer>
-        {/* Create dialog */}
-        <Dialog
-          fullWidth
-          fullScreen
-          className={classes.modalDashboard}
-          TransitionComponent={Transition}
-          open={this.state.create.open}
-          onClose={this.handleCreateClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={3} />
-            <GridItem xs={12} sm={12} md={6}>
-              <DialogTitle id="form-dialog-title">
-                Create New Application
-              </DialogTitle>
-              <Card>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <CustomInput
-                        labelText="Name"
-                        id="name"
-                        formControlProps={{ fullWidth: true }}
-                        value={this.state.create.name}
-                        onChange={this.onCreateName}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <InputLabel style={{ color: "#AAAAAA" }}>
-                        Description
-                      </InputLabel>
-                      <CustomInput
-                        labelText="Put the description of the application."
-                        id="description"
-                        formControlProps={{ fullWidth: true }}
-                        inputProps={{ multiline: true, rows: 5 }}
-                        value={this.state.create.description}
-                        onChange={this.onCreateDescription}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-              </Card>
-              <DialogActions>
-                <Button onClick={this.handleCreateClose} color="primary">
-                  Cancel
-                </Button>
-                <Button onClick={this.handleCreateSubmit} color="primary">
-                  Create
-                </Button>
-              </DialogActions>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={3} />
-          </GridContainer>
-        </Dialog>
         {/* Delete dialog */}
         <Dialog
           TransitionComponent={Transition}
@@ -277,66 +387,81 @@ class Users extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        {/* Edit dialog */}
+        {/* Modal dialog */}
         <Dialog
           fullWidth
           fullScreen
           className={classes.modalDashboard}
           TransitionComponent={Transition}
-          open={this.state.edit.open}
-          onClose={this.handleEditClose}
+          open={this.state.modal.open}
+          onClose={this.handleCreateClose}
           aria-labelledby="form-dialog-title"
         >
           <GridContainer>
             <GridItem xs={12} sm={12} md={3} />
             <GridItem xs={12} sm={12} md={6}>
-              <DialogTitle id="form-dialog-title">Edit application</DialogTitle>
+              <DialogTitle id="form-dialog-title">
+                {this.state.captionModal}
+              </DialogTitle>
               <Card>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
+                    <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Name"
-                        id="name"
+                        labelText="First Name"
+                        id="firstName"
                         formControlProps={{ fullWidth: true }}
-                        onChange={this.onChangeName}
-                        value={this.state.edit.name}
+                        onChange={this.onChangeFirstName}
+                        value={this.state.modal.firstName}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="Last Name"
+                        id="lastName"
+                        formControlProps={{ fullWidth: true }}
+                        onChange={this.onChangeLastName}
+                        value={this.state.modal.lastName}
                       />
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Client ID"
-                        id="client-id"
+                        labelText="Gender"
+                        id="gender"
                         formControlProps={{ fullWidth: true }}
-                        onChange={this.onChangeClientId}
-                        value={this.state.edit.clientId}
+                        onChange={this.onChangeGender}
+                        value={this.state.modal.gender}
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Client Secret"
-                        id="client-secret"
+                        labelText="Role"
+                        id="role"
                         formControlProps={{ fullWidth: true }}
-                        value={this.state.valueSecret}
-                        onChange={this.onChangeClientSecret}
-                        value={this.state.edit.clientSecret}
+                        onChange={this.onChangeRole}
+                        value={this.state.modal.role}
                       />
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <InputLabel style={{ color: "#AAAAAA" }}>
-                        Description
-                      </InputLabel>
+                    <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Put the description of the application."
-                        id="description"
+                        labelText="Email"
+                        id="email"
                         formControlProps={{ fullWidth: true }}
-                        inputProps={{ multiline: true, rows: 5 }}
-                        onChange={this.onChangeDescription}
-                        value={this.state.edit.description}
+                        onChange={this.onChangeEmail}
+                        value={this.state.modal.email}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <CustomInput
+                        labelText="Password"
+                        id="pass"
+                        formControlProps={{ fullWidth: true }}
+                        onChange={this.onChangePass}
+                        value={this.state.modal.pass}
                       />
                     </GridItem>
                   </GridContainer>
@@ -346,8 +471,17 @@ class Users extends React.Component {
                 <Button onClick={this.handleEditClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleEditSubmit} color="primary">
-                  Update
+                <Button
+                  onClick={
+                    this.state.captionModal == this.CREATE_CAPTION
+                      ? this.handleCreateSubmit
+                      : this.handleEditSubmit
+                  }
+                  color="primary"
+                >
+                  {this.state.captionModal == this.CREATE_CAPTION
+                    ? "Create"
+                    : "Update"}
                 </Button>
               </DialogActions>
             </GridItem>
@@ -359,9 +493,9 @@ class Users extends React.Component {
           <Card>
             <CardHeader className={classes.cardHeader} color="primary">
               <div>
-                <h4 className={classes.cardTitleWhite}>Applications</h4>
+                <h4 className={classes.cardTitleWhite}>Users</h4>
                 <p className={classes.cardCategoryWhite}>
-                  Setup web applications to use Minisso for Authentication.
+                  Manage users to use Minisso for Authentication.
                 </p>
               </div>
               <div style={{ position: "relative" }}>
@@ -392,37 +526,45 @@ class Users extends React.Component {
                         }
                         key={"name"}
                       >
-                        {"Application Name"}
+                        {"Name"}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"desc"}
+                        key={"gender"}
                       >
-                        {"Description"}
+                        {"Gender"}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"client-id"}
+                        key={"email"}
                       >
-                        {"Client ID"}
+                        {"Email"}
                       </TableCell>
                       <TableCell
                         className={
                           classes.tableCell + " " + classes.tableHeadCell
                         }
-                        key={"created-at"}
+                        key={"role"}
                       >
-                        {"Created"}
+                        {"Role"}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          classes.tableCell + " " + classes.tableHeadCell
+                        }
+                        key={"last-login"}
+                      >
+                        {"Last Login"}
                       </TableCell>
                       <TableCell />
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {this.state.applications.map(function(app, i) {
+                    {this.state.users.map(function(user, i) {
                       return (
                         <TableRow key={i}>
                           <TableCell
@@ -435,25 +577,31 @@ class Users extends React.Component {
                             className={classes.tableCell}
                             key={"name" + i}
                           >
-                            {app.name}
+                            {user.first_name + " " + user.last_name}
                           </TableCell>
                           <TableCell
                             className={classes.tableCell}
-                            key={"desc" + i}
+                            key={"gender" + i}
                           >
-                            {app.description}
+                            {user.gender}
                           </TableCell>
                           <TableCell
                             className={classes.tableCell}
-                            key={"client-id" + i}
+                            key={"email" + i}
                           >
-                            {app.client_id}
+                            {user.email}
                           </TableCell>
                           <TableCell
                             className={classes.tableCell}
-                            key={"created-at" + i}
+                            key={"role" + i}
                           >
-                            {this.timeAgo.format(new Date(app.created_at))}
+                            {user.role}
+                          </TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={"last-login" + i}
+                          >
+                            {this.timeAgo.format(new Date(user.latest_login))}
                           </TableCell>
                           <TableCell className={classes.tableActions}>
                             <Tooltip
@@ -487,7 +635,7 @@ class Users extends React.Component {
                                 aria-label="Close"
                                 className={classes.tableActionButton}
                                 onClick={this.handleDeleteOpen}
-                                value={app.id}
+                                value={user.id}
                               >
                                 <Close
                                   className={

@@ -429,7 +429,7 @@ class Applications extends React.Component {
           <GridContainer>
             <GridItem xs={12} sm={12} md={3} />
             <GridItem xs={12} sm={12} md={6}>
-              <DialogTitle id="form-dialog-title">Edit application</DialogTitle>
+              <DialogTitle id="form-dialog-title">Edit Application</DialogTitle>
               <Card>
                 <CardBody>
                   <GridContainer>
