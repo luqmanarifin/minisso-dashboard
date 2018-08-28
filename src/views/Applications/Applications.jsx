@@ -156,12 +156,42 @@ class Applications extends React.Component {
   };
 
   handleCreateOpen = () => {
-    this.fetchApplication();
-    this.setState({ create: { open: true } });
+    this.setState({
+      create: {
+        open: true,
+        name: "",
+        description: ""
+      }
+    });
   };
 
   handleCreateClose = () => {
     this.setState({ create: { open: false } });
+  };
+
+  handleCreateSubmit = () => {
+    fetch("http://localhost:1234/services", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      },
+      body: JSON.stringify({
+        application: {
+          name: this.state.create.name,
+          description: this.state.create.description
+        }
+      })
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchApplication();
+        this.setState({ create: { open: false } });
+      });
   };
 
   handleEditSubmit = () => {
@@ -194,6 +224,26 @@ class Applications extends React.Component {
           }
         });
       });
+  };
+
+  onCreateName = event => {
+    this.setState({
+      create: {
+        open: true,
+        name: event.target.value,
+        description: this.state.create.description
+      }
+    });
+  };
+
+  onCreateDescription = event => {
+    this.setState({
+      create: {
+        open: true,
+        name: this.state.create.name,
+        description: event.target.value
+      }
+    });
   };
 
   onChangeName = event => {
@@ -276,6 +326,8 @@ class Applications extends React.Component {
                         labelText="Name"
                         id="name"
                         formControlProps={{ fullWidth: true }}
+                        value={this.state.create.name}
+                        onChange={this.onCreateName}
                       />
                     </GridItem>
                   </GridContainer>
@@ -289,6 +341,8 @@ class Applications extends React.Component {
                         id="description"
                         formControlProps={{ fullWidth: true }}
                         inputProps={{ multiline: true, rows: 5 }}
+                        value={this.state.create.description}
+                        onChange={this.onCreateDescription}
                       />
                     </GridItem>
                   </GridContainer>
@@ -298,7 +352,7 @@ class Applications extends React.Component {
                 <Button onClick={this.handleCreateClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={this.handleCreateClose} color="primary">
+                <Button onClick={this.handleCreateSubmit} color="primary">
                   Create
                 </Button>
               </DialogActions>
