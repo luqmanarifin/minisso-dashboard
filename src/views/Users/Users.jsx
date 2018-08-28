@@ -138,7 +138,6 @@ class Users extends React.Component {
 
   handleEditOpen = event => {
     var id = event.target.value;
-    console.log(id);
     this.setState({
       captionModal: this.EDIT_CAPTION,
       modal: {
@@ -252,7 +251,6 @@ class Users extends React.Component {
   };
 
   handleDeleteSubmit = event => {
-    console.log(this.state.delete.id);
     fetch("http://localhost:1234/users/" + this.state.delete.id, {
       method: "DELETE",
       headers: {

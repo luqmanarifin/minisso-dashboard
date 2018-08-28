@@ -140,7 +140,6 @@ class Applications extends React.Component {
 
   handleEditOpen = event => {
     var id = event.target.value;
-    console.log(id);
     this.setState({
       edit: {
         open: true,
