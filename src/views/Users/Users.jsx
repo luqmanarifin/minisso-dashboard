@@ -98,8 +98,7 @@ class Users extends React.Component {
       gender: "",
       role: "",
       email: "",
-      pass: "",
-      description: ""
+      pass: ""
     },
     users: []
   };
@@ -112,19 +111,71 @@ class Users extends React.Component {
     this.timeAgo = new TimeAgo("en-US");
   }
 
-  fetchUser() {}
+  fetchUser() {
+    fetch("http://localhost:1234/users", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      }
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.setState({ users: result.data });
+      });
+  }
 
   componentDidMount() {
     this.fetchUser();
   }
 
-  handleEditOpen = event => {};
+  handleEditOpen = event => {
+    var id = event.target.value;
+    console.log(id);
+    this.setState({
+      modal: {
+        open: true,
+        id: this.state.users[id].id,
+        firstName: this.state.users[id].first_name,
+        lastName: this.state.users[id].last_name,
+        gender: this.state.users[id].gender,
+        role: this.state.users[id].role,
+        email: this.state.users[id].email,
+        pass: this.state.users[id].password
+      }
+    });
+  };
 
-  handleEditClose = event => {};
+  handleEditClose = event => {
+    this.setState({ modal: { open: false } });
+  };
 
-  handleCreateOpen = event => {};
+  handleEditSubmit = event => {};
 
-  handleCreateClose = event => {};
+  handleCreateOpen = event => {
+    this.setState({
+      modal: {
+        open: true,
+        id: 0,
+        firstName: "",
+        lastName: "",
+        gender: "",
+        role: "",
+        email: "",
+        pass: ""
+      }
+    });
+  };
+
+  handleCreateClose = event => {
+    this.setState({ modal: { open: false } });
+  };
+
+  handleCreateSubmit = event => {};
 
   handleDeleteOpen = event => {};
 
