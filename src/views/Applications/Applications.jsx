@@ -9,7 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -86,7 +85,8 @@ class Applications extends React.Component {
   state = {
     value: 0,
     delete: {
-      open: false
+      open: false,
+      id: 0
     },
     create: {
       open: false,
@@ -147,8 +147,13 @@ class Applications extends React.Component {
     this.setState({ edit: { open: false } });
   };
 
-  handleDeleteOpen = () => {
-    this.setState({ delete: { open: true } });
+  handleDeleteOpen = event => {
+    this.setState({
+      delete: {
+        open: true,
+        id: event.target.value
+      }
+    });
   };
 
   handleDeleteClose = () => {
@@ -167,6 +172,25 @@ class Applications extends React.Component {
 
   handleCreateClose = () => {
     this.setState({ create: { open: false } });
+  };
+
+  handleDeleteSubmit = () => {
+    fetch("http://localhost:1234/services/" + this.state.delete.id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, Cache-Control"
+      }
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.fetchApplication();
+        this.setState({ delete: { open: false } });
+      });
   };
 
   handleCreateSubmit = () => {
@@ -377,7 +401,7 @@ class Applications extends React.Component {
             <Button onClick={this.handleDeleteClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleDeleteClose} color="primary">
+            <Button onClick={this.handleDeleteSubmit} color="primary">
               Delete
             </Button>
           </DialogActions>
@@ -592,7 +616,7 @@ class Applications extends React.Component {
                                 aria-label="Close"
                                 className={classes.tableActionButton}
                                 onClick={this.handleDeleteOpen}
-                                value={i}
+                                value={app.id}
                               >
                                 <Close
                                   className={
